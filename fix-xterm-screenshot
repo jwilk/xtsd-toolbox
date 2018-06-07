@@ -5,20 +5,18 @@
 
 import argparse
 import sys
-import xml.etree.ElementTree as etree
+import lxml.etree as etree
 
 def main():
     ap = argparse.ArgumentParser(usage='%(prog)s < SVGFILE')
     ap.parse_args()
     if sys.stdin.isatty():
         ap.error('stdin is a tty')
-    svg_ns = 'http://www.w3.org/2000/svg'
-    etree.register_namespace('', svg_ns)
+    ns = dict(svg='http://www.w3.org/2000/svg')
     doc = etree.parse(sys.stdin.buffer)
     px = py = -1e999
     width = 1e999
-    path = './/{{{ns}}}text'.format(ns=svg_ns)
-    for elt in doc.iterfind(path):
+    for elt in doc.iterfind('//svg:text', namespaces=ns):
         x = int(elt.get('x'))
         y = int(elt.get('y'))
         if y == py:
@@ -29,7 +27,7 @@ def main():
         px = x
     px = py = -1e999
     pelt = None
-    for elt in doc.iterfind(path):
+    for elt in doc.iterfind('//svg:text', namespaces=ns):
         x = int(elt.get('x'))
         y = int(elt.get('y'))
         if y == py:
