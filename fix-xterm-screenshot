@@ -7,12 +7,16 @@ import argparse
 import sys
 import lxml.etree as etree
 
+ns = dict(svg='http://www.w3.org/2000/svg')
+
+def ntag(prefix, tag):
+    return '{' + ns[prefix] + '}' + tag
+
 def main():
     ap = argparse.ArgumentParser(usage='%(prog)s < SVGFILE')
     ap.parse_args()
     if sys.stdin.isatty():
         ap.error('stdin is a tty')
-    ns = dict(svg='http://www.w3.org/2000/svg')
     doc = etree.parse(sys.stdin.buffer)
     px = py = -1e999
     width = 1e999
@@ -27,18 +31,28 @@ def main():
         px = x
     px = py = -1e999
     pelt = None
+    for elt in doc.iterfind('//*', namespaces=ns):
+        if elt.tag != ntag('svg', 'text'):
+            elt.text = ''
+        elt.tail = ''
     for elt in doc.iterfind('//svg:text', namespaces=ns):
         x = int(elt.get('x'))
         y = int(elt.get('y'))
         if y == py:
             dx = x - px
-            if dx == width:
-                pelt.tail = None
-            elif pelt.tail:
+            if dx != width:
                 pelt.tail = ' '
+        elif pelt is not None:
+            pelt.getparent().tail = '\n'
         py = y
         px = x
         pelt = elt
+    elt = doc.getroot()
+    elt.text = '\n'
+    [elt] = elt
+    elt.text = '\n'
+    elt.tail = '\n'
+    elt[-1].tail = '\n'
     doc.write(sys.stdout.buffer, encoding='UTF-8')
     sys.stdout.buffer.write(b'\n')
 
