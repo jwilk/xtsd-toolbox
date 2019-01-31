@@ -69,6 +69,9 @@ def main():
         pelt = elt
     elt = doc.getroot()
     elt.text = '\n'
+    _, _, width, height = map(int, elt.get('viewBox').split())
+    elt.set('width', '{0:.1f}ex'.format(width / 10))
+    elt.set('height', '{0:.1f}ex'.format(height / 10))
     elt = elt.find('./svg:g', namespaces=ns)
     elt.set('font-family', 'monospace')
     elt.text = '\n'
