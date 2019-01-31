@@ -74,6 +74,9 @@ def main():
     elt.set('height', '{0:.1f}ex'.format(height / 10))
     elt = elt.find('./svg:g', namespaces=ns)
     elt.set('font-family', 'monospace')
+    font_size = float(elt.get('font-size'))
+    if font_size.is_integer():
+        elt.set('font-size', '{0:.0f}'.format(font_size))
     elt.text = '\n'
     elt.tail = '\n'
     elt[-1].tail = '\n'
