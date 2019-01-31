@@ -36,6 +36,8 @@ def main():
             elt.tail = '\n'
             elt.text = None
             continue
+        if elt.tag == ntag('svg', 'desc'):
+            elt.getparent().remove(elt)
         if elt.tag != ntag('svg', 'text'):
             elt.text = ''
         elt.tail = ''
