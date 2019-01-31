@@ -49,7 +49,7 @@ def main():
         pelt = elt
     elt = doc.getroot()
     elt.text = '\n'
-    [elt] = elt
+    elt = elt.find('./svg:g', namespaces=ns)
     elt.text = '\n'
     elt.tail = '\n'
     elt[-1].tail = '\n'
