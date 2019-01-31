@@ -42,11 +42,13 @@ def main():
             dx = x - px
             if dx != width:
                 pelt.tail = ' '
-        elif pelt is not None:
-            pelt.getparent().tail = '\n'
         py = y
         px = x
         pelt = elt
+    for elt in doc.iter():
+        if elt.tag == etree.Comment:
+            elt.tail = '\n'
+            elt.text = None
     elt = doc.getroot()
     elt.text = '\n'
     elt = elt.find('./svg:g', namespaces=ns)
