@@ -70,6 +70,7 @@ def main():
     elt = doc.getroot()
     elt.text = '\n'
     elt = elt.find('./svg:g', namespaces=ns)
+    elt.set('font-family', 'monospace')
     elt.text = '\n'
     elt.tail = '\n'
     elt[-1].tail = '\n'
