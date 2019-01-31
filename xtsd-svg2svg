@@ -73,6 +73,7 @@ def main():
     elt.text = '\n'
     elt.tail = '\n'
     elt[-1].tail = '\n'
+    doc.docinfo.clear()
     doc.write(sys.stdout.buffer, encoding='UTF-8')
     sys.stdout.buffer.write(b'\n')
 
