@@ -1,3 +1,5 @@
+# encoding=UTF-8
+
 # Copyright © 2019 Jakub Wilk <jwilk@jwilk.net>
 # SPDX-License-Identifier: MIT
 
@@ -6,6 +8,8 @@ xterm screendump helper functions
 '''
 
 import re
+
+...  # Python 3 is required
 
 def fix_color(s):
     match = re.match(r'^rgb[(](\d+[.]\d+)%, (\d+[.]\d+)%, (\d+[.]\d+)%[)]$', s)
