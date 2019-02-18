@@ -1,0 +1,47 @@
+#!/usr/bin/env python3
+
+# Copyright © 2018-2019 Jakub Wilk <jwilk@jwilk.net>
+# SPDX-License-Identifier: MIT
+
+import argparse
+import re
+import sys
+import lxml.html
+
+import libxtsd as lib
+
+def main():
+    ap = argparse.ArgumentParser(usage='%(prog)s < HTMLFILE')
+    ap.parse_args()
+    if sys.stdin.isatty():
+        ap.error('stdin is a tty')
+    doc = lxml.html.parse(sys.stdin.buffer)
+    pre_elt = doc.find('//pre')
+    pre_elt.tail = '\n'
+    for span_elt in pre_elt.findall('.//span'):
+        cls = span_elt.attrib.pop('class', '')
+        cls = set(cls.split())
+        cls.discard('od')
+        cls.discard('ev')
+        try:
+            cls.remove('bd')
+        except KeyError:
+            bold = False
+        else:
+            bold = True
+        if cls:
+            raise NotImplementedError('unexpected classes: ' + ' '.join(cls))
+        style = span_elt.get('style')
+        def subst(match):
+            return match.group(1) + lib.fix_color(match.group(2))
+        style = re.sub(r'\b((?:background|color):\s+)(rgb[(][^)]+[)])', subst, style)
+        if bold:
+            style += '; font-weight: bold'
+        span_elt.set('style', style)
+    s = lxml.html.tostring(pre_elt, encoding='UTF-8')
+    sys.stdout.buffer.write(s)
+
+if __name__ == '__main__':
+    main()
+
+# vim:ts=4 sts=4 sw=4 et
