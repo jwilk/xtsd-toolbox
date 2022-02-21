@@ -19,7 +19,7 @@ def fix_color(s):
         v = match.group(i)
         v = float(v)
         v = int(15 * v / 100.0)
-        v = '{0:x}'.format(v)
+        v = f'{v:x}'
         result += [v]
     return ''.join(result)
 

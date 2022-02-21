@@ -63,13 +63,13 @@ def main():
     elt = doc.getroot()
     elt.text = '\n'
     _, _, width, height = map(int, elt.get('viewBox').split())
-    elt.set('width', '{0:.1f}ex'.format(width / 10))
-    elt.set('height', '{0:.1f}ex'.format(height / 10))
+    elt.set('width', f'{width / 10:.1f}ex')
+    elt.set('height', f'{height / 10:.1f}ex')
     elt = elt.find('./svg:g', namespaces=ns)
     elt.set('font-family', 'monospace')
     font_size = float(elt.get('font-size'))
     if font_size.is_integer():
-        elt.set('font-size', '{0:.0f}'.format(font_size))
+        elt.set('font-size', f'{font_size:.0f}')
     elt.text = '\n'
     elt.tail = '\n'
     elt[-1].tail = '\n'
