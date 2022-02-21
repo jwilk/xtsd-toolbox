@@ -11,7 +11,7 @@ import lxml.html
 
 import libxtsd as lib
 
-...  # Python 3 is required
+0_0  # Python >= 3.6 is required
 
 def main():
     ap = argparse.ArgumentParser(usage='%(prog)s < HTMLFILE')
