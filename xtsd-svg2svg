@@ -43,10 +43,11 @@ def main():
             continue
         if elt.tag == ntag('svg', 'desc'):
             elt.getparent().remove(elt)
-        fill = elt.get('fill')
-        if fill is not None:
-            fill = lib.fix_color(fill)
-            elt.set('fill', fill)
+        for cattr in 'fill', 'stroke':
+            color = elt.get(cattr)
+            if color is not None:
+                color = lib.fix_color(color)
+                elt.set(cattr, color)
         if elt.tag != ntag('svg', 'text'):
             elt.text = ''
         elt.tail = ''
