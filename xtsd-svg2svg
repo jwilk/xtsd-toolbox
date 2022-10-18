@@ -43,6 +43,8 @@ def main():
             continue
         if elt.tag == ntag('svg', 'desc'):
             elt.getparent().remove(elt)
+        if elt.tag == ntag('svg', 'g') and len(elt) == 0:
+            elt.getparent().remove(elt)
         for cattr in 'fill', 'stroke':
             color = elt.get(cattr)
             if color is not None:
