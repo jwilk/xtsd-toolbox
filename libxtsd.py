@@ -1,6 +1,6 @@
 # encoding=UTF-8
 
-# Copyright © 2019-2022 Jakub Wilk <jwilk@jwilk.net>
+# Copyright © 2019-2024 Jakub Wilk <jwilk@jwilk.net>
 # SPDX-License-Identifier: MIT
 
 '''
