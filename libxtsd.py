@@ -9,7 +9,6 @@ xterm screendump helper functions
 
 import re
 
-
 0_0  # Python >= 3.6 is required
 
 def fix_color(s):
