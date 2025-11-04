@@ -34,7 +34,7 @@ def main():
         else:
             bold = True
         if cls:
-            raise NotImplementedError('unexpected classes: ' + ' '.join(cls))
+            raise NotImplementedError('unexpected classes: ' + str.join(' ', cls))
         style = span_elt.get('style')
         def subst(match):
             return match.group(1) + lib.fix_color(match.group(2))

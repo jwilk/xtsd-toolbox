@@ -20,7 +20,7 @@ def fix_color(s):
         v = int(15 * v / 100.0)
         v = f'{v:x}'
         result += [v]
-    return ''.join(result)
+    return str.join('', result)
 
 __all__ = ['fix_color']
 
