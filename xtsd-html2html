@@ -16,6 +16,7 @@ import libxtsd as lib
 
 def main():
     ap = argparse.ArgumentParser(usage='%(prog)s < HTMLFILE')
+    ap.color = False
     ap.parse_args()
     if sys.stdin.isatty():
         ap.error('stdin is a tty')
